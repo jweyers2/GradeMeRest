@@ -2,6 +2,8 @@ package com.gradeMeApp.datatransferobject;
 
 import javax.validation.constraints.NotNull;
 
+import com.gradeMeApp.domainvalue.School;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,4 +17,9 @@ public class UserDTO {
 	String password;
 	@Builder.Default
 	boolean teacher = false;
+	@NotNull(message = "You have to enter a name.")
+	String firstName;
+	@NotNull(message = "You have to enter a name.")
+	String lastName;
+	School school;
 }

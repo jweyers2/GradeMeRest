@@ -19,18 +19,19 @@ import lombok.Data;
 @Table
 @Data
 public class ModuleMonth {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private Month month;
-	
+	private boolean deleted = false;
+
 	@ManyToOne
-    @JoinColumn
-	private Module module;
-	
-	@ManyToMany(mappedBy = "modulemonth")
+	@JoinColumn
+	private User User;
+
+	@ManyToMany(mappedBy = "Usermonth")
 	private List<Pupil> pupils;
-	
+
 }

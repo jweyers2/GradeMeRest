@@ -8,19 +8,19 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table
+@NoArgsConstructor
 public class Pupil extends User {
 
-	public Pupil(String email, String password) {
-		super(email, password);
+	public Pupil(User user) {
+		super(user);
 	}
 
 	@ManyToMany
-	@JoinTable(
-	  name = "moduleMonth_pupil", 
-	  joinColumns = @JoinColumn(name = "pupil_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "moduleMonth_id"))
-	private List<ModuleMonth> modulemonth;
-	
+	@JoinTable(name = "UserMonth_pupil", joinColumns = @JoinColumn(name = "pupil_id"), inverseJoinColumns = @JoinColumn(name = "UserMonth_id"))
+	private List<ModuleMonth> Usermonth;
+
 }

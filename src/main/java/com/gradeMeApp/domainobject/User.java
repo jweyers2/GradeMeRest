@@ -2,25 +2,50 @@ package com.gradeMeApp.domainobject;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.gradeMeApp.domainvalue.School;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 /*
  * User can be Teacher or Pupil
  */
 public class User {
 
-	@Column(unique = true)
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(unique = true)
 	private String email;
 
-	@Column
 	private String password;
+	@Builder.Default
+	private boolean deleted = false;
+
+	private String firstName;
+	private String lastName;
+	private School school;
+
+	public User(User user) {
+		this.setDeleted(false);
+		this.setEmail(user.getEmail());
+		this.setFirstName(user.getFirstName());
+		this.setLastName(user.getLastName());
+		this.setPassword(user.getPassword());
+		this.setSchool(user.getSchool());
+	}
 }

@@ -13,10 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @Data
+@NoArgsConstructor
 public class Module {
 
 	@Id
@@ -25,11 +27,17 @@ public class Module {
 
 	private String name;
 
+	private boolean deleted = false;
+
 	@ManyToOne
 	@JoinColumn
 	private Teacher teacher;
-	
-	@OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
-	private List<ModuleMonth> modulemonth;
+
+	@OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
+	private List<ModuleMonth> Usermonth;
+
+	public Module(final String name) {
+		this.name = name;
+	}
 
 }
