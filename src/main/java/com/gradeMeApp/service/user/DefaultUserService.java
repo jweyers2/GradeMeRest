@@ -12,10 +12,10 @@ import com.gradeMeApp.exception.EntityNotFoundException;
 @Service
 public class DefaultUserService implements UserService {
 
-	private final UserRepository UserRepository;
+	private final UserRepository userRepository;
 
-	public DefaultUserService(final UserRepository UserRepository) {
-		this.UserRepository = UserRepository;
+	public DefaultUserService(final UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class DefaultUserService implements UserService {
 		User user;
 //		String password = new BCryptPasswordEncoder().encode(UserDO.getPassword()); TODO
 		try {
-			user = UserRepository.save(userDO);// TODO password encoding?
+			user = userRepository.save(userDO);// TODO password encoding?
 		} catch (DataIntegrityViolationException e) {
 			throw new ConstraintsViolationException(
 					"Operation wasn't successful. Is the email address already connected to an other User?");
@@ -32,14 +32,28 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
+	public User login(String email, String password) throws EntityNotFoundException{
+		User user = getUser(email);
+		if (user.getPassword()!=password)
+		{
+			throw new EntityNotFoundException("A user with this username and password doesn't exist.");
+		}
+		return user;
+	}
+
+	@Override
 	public User getUser(Long id) throws EntityNotFoundException {
-		return UserRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted()).orElseThrow(() -> {
-			return new EntityNotFoundException("The user doesn't exist or is deleted");
-		});
+		return userRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted())
+				.orElseThrow(() -> new EntityNotFoundException("The user doesn't exist or is deleted"));
+	}
+
+	private User getUser(String email) throws EntityNotFoundException {
+		return userRepository.findByEmail(email).filter(user -> Boolean.FALSE == user.isDeleted())
+				.orElseThrow(() -> new EntityNotFoundException("The user doesn't exist or is deleted"));
 	}
 
 	private boolean existUser(Long id) {
-		return UserRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted()).isPresent();
+		return userRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted()).isPresent();
 	}
 
 	@Override

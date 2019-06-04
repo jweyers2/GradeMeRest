@@ -13,4 +13,6 @@ public interface UserService {
 	public User updateUser(Long id, User User) throws EntityNotFoundException, ConstraintsViolationException;
 
 	public void deleteUser(Long id) throws EntityNotFoundException;
+	
+	public User login(String email, String password) throws EntityNotFoundException; 
 }

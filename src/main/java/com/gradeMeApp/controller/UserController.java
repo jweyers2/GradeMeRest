@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gradeMeApp.controller.mapper.UserMapper;
+import com.gradeMeApp.datatransferobject.RegisterUserDTO;
 import com.gradeMeApp.datatransferobject.TeacherDTO;
 import com.gradeMeApp.datatransferobject.UserDTO;
 import com.gradeMeApp.domainobject.Teacher;
@@ -24,7 +25,7 @@ import com.gradeMeApp.exception.EntityNotFoundException;
 import com.gradeMeApp.service.user.UserService;
 
 @RestController
-@RequestMapping("v1/Users")
+@RequestMapping("v1/users")
 public class UserController {
 
 	private final UserService userService;
@@ -41,12 +42,18 @@ public class UserController {
 		return UserMapper.mapToUserDTO(userService.createUser(user));
 	}
 
+	@GetMapping("/login")
+	public UserDTO login(@Valid @RequestBody RegisterUserDTO userDTO) throws EntityNotFoundException {
+		User user = userService.login(userDTO.getEmail(), userDTO.getPassword());
+		return UserMapper.mapToUserDTO(user);
+	}
+	
 	@GetMapping("/{id}")
 	public UserDTO getUser(@PathVariable final Long id) throws EntityNotFoundException {
 		return UserMapper.mapToUserDTO(userService.getUser(id));
 	}
 
-	@PutMapping("/{id}/User")
+	@PutMapping("/{id}/user")
 	public UserDTO updateUser(@PathVariable final Long id, @RequestBody UserDTO userDTO)
 			throws EntityNotFoundException, ConstraintsViolationException {
 		User user = UserMapper.mapToUser(userDTO);
