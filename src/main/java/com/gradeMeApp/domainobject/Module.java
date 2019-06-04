@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,11 +29,10 @@ public class Module {
 	private boolean deleted = false;
 
 	@ManyToOne
-	@JoinColumn
 	private Teacher teacher;
 
-	@OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
-	private List<ModuleMonth> Usermonth;
+	@OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
+	private List<ModulePupilMonthCategory> modulePupilMonthCategory;
 
 	public Module(final String name) {
 		this.name = name;

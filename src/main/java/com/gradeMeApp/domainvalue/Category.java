@@ -1,0 +1,6 @@
+package com.gradeMeApp.domainvalue;
+
+public enum Category {
+
+	ATTENDANCE, VERBAL_PARTICIPATION_QUANTITATIVE, VERBAL_PARTICIPATION_QUALITATIVE, TESTS, EXAMS
+}

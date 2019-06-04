@@ -2,10 +2,9 @@ package com.gradeMeApp.domainobject;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
@@ -19,8 +18,7 @@ public class Pupil extends User {
 		super(user);
 	}
 
-	@ManyToMany
-	@JoinTable(name = "UserMonth_pupil", joinColumns = @JoinColumn(name = "pupil_id"), inverseJoinColumns = @JoinColumn(name = "UserMonth_id"))
-	private List<ModuleMonth> Usermonth;
+	@OneToMany(mappedBy = "pupil", cascade = CascadeType.ALL)
+	private List<ModulePupilMonthCategory> modulePupilMonthCategory;
 
 }

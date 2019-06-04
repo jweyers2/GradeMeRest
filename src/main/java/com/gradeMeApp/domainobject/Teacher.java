@@ -26,6 +26,6 @@ public class Teacher extends User {
 	String bic;
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-	private List<User> Users;
+	private List<Module> modules;
 
 }
