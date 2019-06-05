@@ -1,5 +1,7 @@
 package com.gradeMeApp.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +34,42 @@ public class ModuleController {
 		this.moduleService = moduleService;
 	}
 
-	@PostMapping
+	@PostMapping("/{teacherId}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ModuleDTO createModule(@Valid @RequestBody ModuleDTO moduleDTO) throws ConstraintsViolationException {
+	public ModuleDTO createModule(@PathVariable final long teacherId, @Valid @RequestBody ModuleDTO moduleDTO)
+			throws ConstraintsViolationException, EntityNotFoundException {
 		Module module = ModuleMapper.mapToModule(moduleDTO);
-		return ModuleMapper.mapToModuleDTO(moduleService.createModule(module));
+		return ModuleMapper.mapToModuleDTO(moduleService.createModule(teacherId, module));
 	}
 
-	@GetMapping("/{id}")
-	public ModuleDTO getmodule(@PathVariable final Long id) throws EntityNotFoundException {
-		return ModuleMapper.mapToModuleDTO(moduleService.getModule(id));
+	@PutMapping("/{moduleId}/pupil/{pupilId}")
+	public void addPupilToModule(@PathVariable final long moduleId, @PathVariable final long pupilId) throws EntityNotFoundException
+	{
+		moduleService.addPupilToModule(moduleId, pupilId);
 	}
 
-	@PutMapping("/{id}")
-	public ModuleDTO updateModule(@PathVariable final Long id, @RequestBody ModuleDTO moduleDTO)
-			throws EntityNotFoundException, ConstraintsViolationException {
+	@GetMapping("/{userId}")
+	public List<ModuleDTO> getModules(@PathVariable final long userId) throws EntityNotFoundException {
+		List<Module> modules = moduleService.findModules(userId);
+		return ModuleMapper.maptToModuleDTOList(modules);
+	}
+
+	@GetMapping("/{teacherId}/module/{moduleId}")
+	public ModuleDTO getModule(@PathVariable final long teacherId, @PathVariable final long moduleId)
+			throws EntityNotFoundException {
+		return ModuleMapper.mapToModuleDTO(moduleService.getModule(teacherId, moduleId));
+	}
+
+	@PutMapping("/{teacherId}/module/{moduleId}")
+	public ModuleDTO updateModule(@PathVariable final long teacherId, @PathVariable final long moduleId,
+			@RequestBody ModuleDTO moduleDTO) throws EntityNotFoundException, ConstraintsViolationException {
 		Module module = ModuleMapper.mapToModule(moduleDTO);
-		return ModuleMapper.mapToModuleDTO(moduleService.updateModule(id, module));
+		return ModuleMapper.mapToModuleDTO(moduleService.updateModule(teacherId, moduleId, module));
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteModule(@PathVariable final Long id) throws EntityNotFoundException {
-		moduleService.deleteModule(id);
+	@DeleteMapping("/{teacherId}/module/{moduleId}")
+	public void deleteModule(@PathVariable final long teacherId, @PathVariable final long moduleId)
+			throws EntityNotFoundException {
+		moduleService.deleteModule(teacherId, moduleId);
 	}
 }

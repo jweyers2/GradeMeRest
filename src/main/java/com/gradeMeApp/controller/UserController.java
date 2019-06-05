@@ -47,28 +47,28 @@ public class UserController {
 		User user = userService.login(userDTO.getEmail(), userDTO.getPassword());
 		return UserMapper.mapToUserDTO(user);
 	}
-	
+
 	@GetMapping("/{id}")
-	public UserDTO getUser(@PathVariable final Long id) throws EntityNotFoundException {
+	public UserDTO getUser(@PathVariable final long id) throws EntityNotFoundException {
 		return UserMapper.mapToUserDTO(userService.getUser(id));
 	}
 
 	@PutMapping("/{id}/user")
-	public UserDTO updateUser(@PathVariable final Long id, @RequestBody UserDTO userDTO)
+	public UserDTO updateUser(@PathVariable final long id, @RequestBody UserDTO userDTO)
 			throws EntityNotFoundException, ConstraintsViolationException {
 		User user = UserMapper.mapToUser(userDTO);
 		return UserMapper.mapToUserDTO(userService.updateUser(id, user));
 	}
 
 	@PutMapping("/{id}/teacher")
-	public UserDTO updateTeacher(@PathVariable final Long id, @RequestBody TeacherDTO teacherDTO)
+	public UserDTO updateTeacher(@PathVariable final long id, @RequestBody TeacherDTO teacherDTO)
 			throws EntityNotFoundException, ConstraintsViolationException {
 		Teacher teacher = UserMapper.mapToTeacher(teacherDTO);
 		return UserMapper.mapToUserDTO(userService.updateUser(id, teacher));
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable final Long id) throws EntityNotFoundException {
+	public void deleteUser(@PathVariable final long id) throws EntityNotFoundException {
 		userService.deleteUser(id);
 	}
 

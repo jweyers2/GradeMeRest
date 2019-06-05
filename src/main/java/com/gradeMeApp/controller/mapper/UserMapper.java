@@ -21,7 +21,7 @@ public class UserMapper {
 	}
 
 	public static UserDTO mapToUserDTO(User user) {
-		UserDTO userDTO = UserDTO.builder().email(user.getEmail()).password(user.getPassword())
+		UserDTO userDTO = UserDTO.builder().id(user.getId()).email(user.getEmail()).password(user.getPassword())
 				.firstName(user.getFirstName()).lastName(user.getLastName()).school(user.getSchool()).build();
 		if (user instanceof Teacher) {
 			userDTO.setTeacher(true);

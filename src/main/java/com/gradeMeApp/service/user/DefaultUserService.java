@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gradeMeApp.dataaccessobject.UserRepository;
+import com.gradeMeApp.domainobject.Pupil;
+import com.gradeMeApp.domainobject.Teacher;
 import com.gradeMeApp.domainobject.User;
 import com.gradeMeApp.exception.ConstraintsViolationException;
 import com.gradeMeApp.exception.EntityNotFoundException;
@@ -32,47 +34,60 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
-	public User login(String email, String password) throws EntityNotFoundException{
+	public User login(final String email, final String password) throws EntityNotFoundException {
 		User user = getUser(email);
-		if (user.getPassword()!=password)
-		{
+		if (user.getPassword() != password) {
 			throw new EntityNotFoundException("A user with this username and password doesn't exist.");
 		}
 		return user;
 	}
 
 	@Override
-	public User getUser(Long id) throws EntityNotFoundException {
+	public User getUser(final long id) throws EntityNotFoundException {
 		return userRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted())
 				.orElseThrow(() -> new EntityNotFoundException("The user doesn't exist or is deleted"));
 	}
 
-	private User getUser(String email) throws EntityNotFoundException {
+	private User getUser(final String email) throws EntityNotFoundException {
 		return userRepository.findByEmail(email).filter(user -> Boolean.FALSE == user.isDeleted())
 				.orElseThrow(() -> new EntityNotFoundException("The user doesn't exist or is deleted"));
 	}
 
-	private boolean existUser(Long id) {
-		return userRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted()).isPresent();
-	}
+//	private boolean existUser(long id) {
+//		return userRepository.findById(id).filter(user -> Boolean.FALSE == user.isDeleted()).isPresent();
+//	}
 
 	@Override
-	public User updateUser(final Long id, User user) throws EntityNotFoundException, ConstraintsViolationException {
-
-		if (existUser(id)) {
-			user.setId(id);
-			return createUser(user);
-		}
-		throw new EntityNotFoundException("The user with id " + id + " doesn't exist");
-
+	public User updateUser(final long id, User user) throws EntityNotFoundException, ConstraintsViolationException {
+		this.getUser(id);
+		user.setId(id);
+		return createUser(user);
 	}
 
 	@Transactional
 	@Override
-	public void deleteUser(Long id) throws EntityNotFoundException {
+	public void deleteUser(final long id) throws EntityNotFoundException {
 		User user = getUser(id);
 		user.setDeleted(false);
 
+	}
+
+	@Override
+	public Teacher getTeacher(final long id) throws EntityNotFoundException {
+		User user = this.getUser(id);
+		if (user instanceof Teacher) {
+			return (Teacher) user;
+		}
+		throw new EntityNotFoundException("The given user hasn't the appropriate role");
+	}
+
+	@Override
+	public Pupil getPupil(final long id) throws EntityNotFoundException {
+		User user = this.getUser(id);
+		if (user instanceof Pupil) {
+			return (Pupil) user;
+		}
+		throw new EntityNotFoundException("The given user hasn't the appropriate role");
 	}
 
 //	@Override

@@ -1,16 +1,25 @@
 package com.gradeMeApp.service.module;
 
+import java.util.List;
+
 import com.gradeMeApp.domainobject.Module;
 import com.gradeMeApp.exception.ConstraintsViolationException;
 import com.gradeMeApp.exception.EntityNotFoundException;
 
 public interface ModuleService {
 
-	public Module createModule(Module module) throws ConstraintsViolationException;
+	public Module createModule(final long teacherId, Module module)
+			throws ConstraintsViolationException, EntityNotFoundException;
 
-	public Module getModule(Long id) throws EntityNotFoundException;
+	public Module getModule(final long teacherId, final long moduleId) throws EntityNotFoundException;
 
-	public Module updateModule(Long id, Module User) throws EntityNotFoundException, ConstraintsViolationException;
+	public Module updateModule(final long teacherId, final long moduleId, Module module)
+			throws EntityNotFoundException, ConstraintsViolationException;
 
-	public void deleteModule(Long id) throws EntityNotFoundException;
+	public void deleteModule(final long teacherId, final long moduleId) throws EntityNotFoundException;
+
+	public List<Module> findModules(final long userId) throws EntityNotFoundException;
+
+	public void addPupilToModule(final long moduleId, final long pupilId) throws EntityNotFoundException;
+
 }
