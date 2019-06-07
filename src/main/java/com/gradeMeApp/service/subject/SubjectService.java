@@ -1,4 +1,4 @@
-package com.gradeMeApp.service.module;
+package com.gradeMeApp.service.subject;
 
 import java.util.List;
 

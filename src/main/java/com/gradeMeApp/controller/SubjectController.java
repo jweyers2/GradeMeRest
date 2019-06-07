@@ -22,7 +22,7 @@ import com.gradeMeApp.domainobject.Subject;
 import com.gradeMeApp.exception.ConstraintsViolationException;
 import com.gradeMeApp.exception.EntityAlreadySelectedException;
 import com.gradeMeApp.exception.EntityNotFoundException;
-import com.gradeMeApp.service.module.SubjectService;
+import com.gradeMeApp.service.subject.SubjectService;
 
 @RestController
 @RequestMapping("v1/subjects")

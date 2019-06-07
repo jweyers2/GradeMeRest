@@ -157,29 +157,14 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Change entities",
-			"item": [
+				},
 				{
-					"name": "change subject",
+					"name": "find subjects from teacher with id 1",
 					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\":\"BB\"\n}"
-						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/subjects/1/teacher/1",
+							"raw": "http://localhost:8080/v1/subjects/user/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -188,9 +173,30 @@
 							"path": [
 								"v1",
 								"subjects",
-								"1",
-								"teacher",
+								"user",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find subject from pupil with id  2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/subjects/user/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"subjects",
+								"user",
+								"2"
 							]
 						}
 					},
@@ -229,6 +235,44 @@
 								"1",
 								"pupil",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Change entities",
+			"item": [
+				{
+					"name": "change subject",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"BB\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/subjects/1/teacher/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"subjects",
+								"1",
+								"teacher",
+								"1"
 							]
 						}
 					},

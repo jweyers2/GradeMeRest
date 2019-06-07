@@ -22,6 +22,5 @@ public class SubjectDTO {
 	TeacherDTO teacher;
 
 	// @JsonProperty(access = Access.READ_ONLY)
-	List<UserDTO> pupils;
 	List<SubPuMoCaDTO> subPuMoCas;
 }

@@ -43,7 +43,7 @@ public class Subject {
 	private List<Pupil> pupils;
 
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-	private List<SubPuMoCa> modulePupilMonthCategories;
+	private List<SubPuMoCa> subjectPupilMonthCategories;
 
 	public Subject(final String name) {
 		this.name = name;

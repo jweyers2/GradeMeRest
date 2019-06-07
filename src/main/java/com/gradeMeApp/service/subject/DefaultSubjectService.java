@@ -1,4 +1,4 @@
-package com.gradeMeApp.service.module;
+package com.gradeMeApp.service.subject;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.gradeMeApp.domainobject.User;
 import com.gradeMeApp.exception.ConstraintsViolationException;
 import com.gradeMeApp.exception.EntityAlreadySelectedException;
 import com.gradeMeApp.exception.EntityNotFoundException;
-import com.gradeMeApp.service.moPuMoCa.SubPuMoCaService;
+import com.gradeMeApp.service.subPuMoCa.SubPuMoCaService;
 import com.gradeMeApp.service.user.UserService;
 
 @Service
@@ -50,7 +50,7 @@ public class DefaultSubjectService implements SubjectService {
 		if (user instanceof Teacher) {
 			return subjectRepository.findByTeacher((Teacher) user);
 		} else {
-			return null;// TODO
+			return subPuMoCaService.findAllSubjectsWithUser(user);
 		}
 	}
 
