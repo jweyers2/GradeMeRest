@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,6 +20,9 @@ public class Pupil extends User {
 	}
 
 	@OneToMany(mappedBy = "pupil", cascade = CascadeType.ALL)
-	private List<ModulePupilMonthCategory> modulePupilMonthCategory;
+	private List<SubPuMoCa> modulePupilMonthCategory;
+	
+	@ManyToMany(mappedBy = "pupils")
+	private List<Subject> modules;
 
 }

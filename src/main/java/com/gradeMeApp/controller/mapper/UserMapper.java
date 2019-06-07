@@ -1,5 +1,8 @@
 package com.gradeMeApp.controller.mapper;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
 import com.gradeMeApp.datatransferobject.TeacherDTO;
 import com.gradeMeApp.datatransferobject.UserDTO;
 import com.gradeMeApp.domainobject.Pupil;
@@ -29,6 +32,15 @@ public class UserMapper {
 			userDTO.setTeacher(false);
 		}
 		return userDTO;
+	}
+
+	public static List<UserDTO> mapToUserDTOList(List<User> users) {
+		List<UserDTO> userDTOs = Lists.newLinkedList();
+		for (User user : users) {
+			UserDTO userDTO = UserMapper.mapToUserDTO(user);
+			userDTOs.add(userDTO);
+		}
+		return userDTOs;
 	}
 
 	public static Teacher mapToTeacher(TeacherDTO teacherDTO) {
