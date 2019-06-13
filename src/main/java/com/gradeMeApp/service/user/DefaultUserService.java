@@ -36,7 +36,7 @@ public class DefaultUserService implements UserService {
 	@Override
 	public User login(final String email, final String password) throws EntityNotFoundException {
 		User user = getUser(email);
-		if (user.getPassword() != password) {
+		if (!user.getPassword().equals(password)) {
 			throw new EntityNotFoundException("A user with this username and password doesn't exist.");
 		}
 		return user;
