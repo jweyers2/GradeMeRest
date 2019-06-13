@@ -49,6 +49,11 @@ public class DefaultSubPuMoCaService implements SubPuMoCaService {
 	public List<Subject> findAllSubjectsWithUser(User user) {
 		List<SubPuMoCa> list = subPuMoCaRepository.findByPupil((Pupil) user);
 		List<Subject> subjects = list.stream().map(subPuMoCa -> subPuMoCa.getSubject()).collect(Collectors.toList());
+		for (Subject subject:subjects)
+		{
+			List<SubPuMoCa> subList = subject.getSubjectPupilMonthCategories().stream().filter(subPuMoCa -> subPuMoCa.getPupil()==user).collect(Collectors.toList());
+			subject.setSubjectPupilMonthCategories(subList);
+		}
 		return subjects;
 	}
 }
