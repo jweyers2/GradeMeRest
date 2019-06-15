@@ -42,7 +42,8 @@ public class UserController {
 		return UserMapper.mapToUserDTO(userService.createUser(user));
 	}
 
-	@GetMapping("/login")
+//	@GetMapping("/login")
+	@PostMapping("/login")
 	public UserDTO login(@Valid @RequestBody RegisterUserDTO userDTO) throws EntityNotFoundException {
 		User user = userService.login(userDTO.getEmail(), userDTO.getPassword());
 		return UserMapper.mapToUserDTO(user);
